@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.artur_hodorovskij.rickmasterstestapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.artur_hodorovskij.rickmasterstestapp"
@@ -40,6 +40,15 @@ android {
 }
 
 dependencies {
+
+    implementation (libs.ycharts)
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.svg)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
