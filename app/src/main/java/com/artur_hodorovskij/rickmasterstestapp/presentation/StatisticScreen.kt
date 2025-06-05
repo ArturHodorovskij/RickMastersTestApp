@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.artur_hodorovskij.rickmasterstestapp.presentation.design.TopAppBar
+import com.artur_hodorovskij.rickmasterstestapp.presentation.visitors.TopVisitors
 import com.artur_hodorovskij.rickmasterstestapp.presentation.visitors.VisitChart
 import com.artur_hodorovskij.rickmasterstestapp.presentation.visitors.Visitors
 
@@ -25,6 +26,7 @@ fun StatisticScreen(modifier:Modifier) {
         TopAppBar()
         Visitors()
         VisitChart()
+        TopVisitors()
     }
 }
 
