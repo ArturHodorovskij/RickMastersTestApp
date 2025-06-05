@@ -2,14 +2,12 @@ package com.artur_hodorovskij.rickmasterstestapp.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.artur_hodorovskij.rickmasterstestapp.presentation.design.TopAppBar
 import com.artur_hodorovskij.rickmasterstestapp.presentation.genderandage.GenderAndAge
 import com.artur_hodorovskij.rickmasterstestapp.presentation.observers.Observers
 import com.artur_hodorovskij.rickmasterstestapp.presentation.topvisitor.TopVisitors
@@ -20,11 +18,9 @@ fun StatisticScreen(modifier:Modifier) {
     Column(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .systemBarsPadding()
+        modifier = modifier
             .verticalScroll(rememberScrollState())
     ) {
-        TopAppBar()
         Visitors()
         TopVisitors()
         GenderAndAge()
