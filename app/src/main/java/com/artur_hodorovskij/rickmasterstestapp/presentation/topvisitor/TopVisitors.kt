@@ -1,4 +1,4 @@
-package com.artur_hodorovskij.rickmasterstestapp.presentation.visitors
+package com.artur_hodorovskij.rickmasterstestapp.presentation.topvisitor
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
