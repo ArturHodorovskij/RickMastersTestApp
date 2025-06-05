@@ -26,13 +26,13 @@ import androidx.compose.ui.unit.dp
 import kotlin.random.Random
 
 @Composable
-fun TwoLineDonutChart() {
+fun GenderDonutChart() {
 
     val percentage1 = Random.nextInt(0, 100).toFloat()
     val percentage2 = 100f - percentage1
 
-    val color1 = Color(0xFFFF9800)
-    val color2 = Color(0xFFFFB74D)
+    val color1 = Color(0xFFFF2E00)
+    val color2 = Color(0xFFF99963)
 
     val strokeWidth = 40f
 
@@ -46,8 +46,6 @@ fun TwoLineDonutChart() {
         ) {
             Canvas(modifier = Modifier.fillMaxSize()) {
                 val diameter = size.minDimension
-                val radius = diameter / 2
-                val center = Offset(radius, radius)
 
                 val sweep1 = 360 * (percentage1 / 100f)
                 val sweep2 = 360 * (percentage2 / 100f)
@@ -67,7 +65,7 @@ fun TwoLineDonutChart() {
                 drawArc(
                     color = color2,
                     startAngle = -90f + sweep1 + gapDegrees / 2,
-                    sweepAngle = sweep2 - gapDegrees - gapDegrees/ 2,
+                    sweepAngle = sweep2 - gapDegrees - gapDegrees / 2,
                     useCenter = false,
                     topLeft = Offset(strokeWidth / 2, strokeWidth / 2),
                     size = Size(diameter - strokeWidth, diameter - strokeWidth),
@@ -89,13 +87,3 @@ fun TwoLineDonutChart() {
     }
 }
 
-@Composable
-fun DonutLegendItem(color: Color, label: String, percentage: Float) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Canvas(modifier = Modifier.size(16.dp)) {
-            drawCircle(color = color)
-        }
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(text = "$label: ${percentage.toInt()}%", fontWeight = FontWeight.Bold)
-    }
-}

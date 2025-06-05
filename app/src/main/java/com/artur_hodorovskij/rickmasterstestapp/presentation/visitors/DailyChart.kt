@@ -1,5 +1,6 @@
 package com.artur_hodorovskij.rickmasterstestapp.presentation.visitors
 
+import android.graphics.Paint
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -13,7 +14,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -31,8 +34,8 @@ fun DailyChart() {
     val max = getMax(pointList)
     val min = getMin(pointList)
     val padding = 16.dp
-    val axisColor = Color.Gray
-    val lineColor = Color(0xFFFF9800)
+    val axisColor = Color (0xFFA7A7B1)
+    val lineColor = Color(0xFFFF2E00)
 
     var touchPosition by remember { mutableStateOf<Offset?>(null) }
 
@@ -54,7 +57,7 @@ fun DailyChart() {
 
             val canvasWidth = size.width
             val canvasHeight = size.height
-            val verticalMargin = 20.dp.toPx()
+            val verticalMargin = 40.dp.toPx()
 
             val leftPadding = padding.toPx()
             val bottomPadding = padding.toPx()
@@ -124,9 +127,9 @@ fun DailyChart() {
                     index.toString(),
                     offset.x,
                     canvasHeight + 3.sp.toPx(),
-                    android.graphics.Paint().apply {
-                        color = android.graphics.Color.GRAY
-                        textAlign = android.graphics.Paint.Align.CENTER
+                    Paint().apply {
+                        color = Color.Gray.toArgb()
+                        textAlign = Paint.Align.CENTER
                         textSize = 15.sp.toPx()
                     }
                 )
@@ -148,8 +151,8 @@ fun DailyChart() {
                         strokeWidth = 2.dp.toPx(),
                         pathEffect = dashEffect
                     )
-                    val popupWidth = 100.dp.toPx()
-                    val popupHeight = 40.dp.toPx()
+                    val popupWidth = 128.dp.toPx()
+                    val popupHeight = 72.dp.toPx()
                     val popupX = (closestOffset.x - popupWidth / 2f).coerceIn(
                         10f,
                         canvasWidth - popupWidth - 10f
@@ -159,28 +162,28 @@ fun DailyChart() {
                     drawRoundRect(
                         color = Color.White,
                         topLeft = Offset(popupX, popupY),
-                        size = androidx.compose.ui.geometry.Size(popupWidth, popupHeight),
-                        cornerRadius = androidx.compose.ui.geometry.CornerRadius(8.dp.toPx())
+                        size = Size(popupWidth, popupHeight),
+                        cornerRadius = CornerRadius(8.dp.toPx())
                     )
                     drawRoundRect(
                         color = lineColor,
                         topLeft = Offset(popupX, popupY),
-                        size = androidx.compose.ui.geometry.Size(popupWidth, popupHeight),
-                        cornerRadius = androidx.compose.ui.geometry.CornerRadius(8.dp.toPx()),
+                        size = Size(popupWidth, popupHeight),
+                        cornerRadius = CornerRadius(8.dp.toPx()),
                         style = Stroke(width = 2f)
                     )
 
                     drawContext.canvas.nativeCanvas.apply {
-                        val paintY = android.graphics.Paint().apply {
+                        val paintY = Paint().apply {
                             color = lineColor.toArgb()
                             textSize = 15.sp.toPx()
-                            textAlign = android.graphics.Paint.Align.CENTER
+                            textAlign = Paint.Align.CENTER
                             isAntiAlias = true
                         }
-                        val paintX = android.graphics.Paint().apply {
+                        val paintX = Paint().apply {
                             color = Color.Gray.toArgb()
                             textSize = 15.sp.toPx()
-                            textAlign = android.graphics.Paint.Align.CENTER
+                            textAlign =Paint.Align.CENTER
                             isAntiAlias = true
                         }
                         val centerX = popupX + popupWidth / 2f

@@ -17,12 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.artur_hodorovskij.rickmasterstestapp.data.models.Period
+import com.artur_hodorovskij.rickmasterstestapp.data.models.GenderAndAgePeriod
 import com.artur_hodorovskij.rickmasterstestapp.presentation.design.PeriodButton
 
 @Composable
 fun GenderAndAge() {
-    var selectedPeriod by remember { mutableStateOf(Period.TODAY) }
+    var selectedPeriod by remember { mutableStateOf(GenderAndAgePeriod.TODAY) }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -40,26 +40,35 @@ fun GenderAndAge() {
             .fillMaxWidth()
             .horizontalScroll(rememberScrollState()),
         horizontalArrangement = Arrangement.SpaceAround,
-        ) {
+    ) {
         PeriodButton(
             text = "По дням",
-            isSelected = selectedPeriod == Period.TODAY,
-            onClick = { selectedPeriod = Period.TODAY }
+            isSelected = selectedPeriod == GenderAndAgePeriod.TODAY,
+            onClick = { selectedPeriod = GenderAndAgePeriod.TODAY }
         )
         PeriodButton(
             text = "По неделям",
-            isSelected = selectedPeriod == Period.WEEKLY,
-            onClick = { selectedPeriod = Period.WEEKLY }
+            isSelected = selectedPeriod == GenderAndAgePeriod.WEEKLY,
+            onClick = { selectedPeriod = GenderAndAgePeriod.WEEKLY }
         )
         PeriodButton(
             text = "По месяцам",
-            isSelected = selectedPeriod == Period.MONTHLY,
-            onClick = { selectedPeriod = Period.MONTHLY }
+            isSelected = selectedPeriod == GenderAndAgePeriod.MONTHLY,
+            onClick = { selectedPeriod = GenderAndAgePeriod.MONTHLY }
         )
         PeriodButton(
             text = "По месяцам",
-            isSelected = selectedPeriod == Period.ALL_TIME,
-            onClick = { selectedPeriod = Period.ALL_TIME }
+            isSelected = selectedPeriod == GenderAndAgePeriod.ALL_TIME,
+            onClick = { selectedPeriod = GenderAndAgePeriod.ALL_TIME }
         )
+    }
+    when (selectedPeriod) {
+        GenderAndAgePeriod.TODAY -> {
+            GenderDonutChart()
+            GenderAndAgeBarChart()
+        }
+        GenderAndAgePeriod.WEEKLY -> Unit
+        GenderAndAgePeriod.MONTHLY -> Unit
+        GenderAndAgePeriod.ALL_TIME -> Unit
     }
 }

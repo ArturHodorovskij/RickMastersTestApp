@@ -1,6 +1,7 @@
 package com.artur_hodorovskij.rickmasterstestapp.presentation.design
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -16,8 +17,8 @@ fun PeriodButton(text: String, isSelected: Boolean, onClick: () -> Unit) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = if (isSelected) Color(0xFFFF9800) else Color.Transparent,
-            contentColor = if (isSelected) Color.White else Color.Black
+            containerColor = if (isSelected) Color(0xFFFF2E00) else Color.Transparent,
+            contentColor = if (isSelected or isSystemInDarkTheme()) Color.White else Color.Black
         ),
         border = BorderStroke(0.1.dp, Color.LightGray),
         modifier = Modifier.padding(8.dp)

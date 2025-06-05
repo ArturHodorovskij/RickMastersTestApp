@@ -14,12 +14,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.artur_hodorovskij.rickmasterstestapp.data.models.Period
+import com.artur_hodorovskij.rickmasterstestapp.data.models.VisitorsPeriod
 import com.artur_hodorovskij.rickmasterstestapp.presentation.design.PeriodButton
 
 @Composable
 fun VisitChart() {
-    var selectedPeriod by remember { mutableStateOf(Period.DAYS) }
+    var selectedPeriod by remember { mutableStateOf(VisitorsPeriod.DAYS) }
 
     Column(
         modifier = Modifier
@@ -36,22 +36,27 @@ fun VisitChart() {
             ) {
             PeriodButton(
                 text = "По дням",
-                isSelected = selectedPeriod == Period.DAYS,
-                onClick = { selectedPeriod = Period.DAYS }
+                isSelected = selectedPeriod == VisitorsPeriod.DAYS,
+                onClick = { selectedPeriod = VisitorsPeriod.DAYS }
             )
 
             PeriodButton(
                 text = "По неделям",
-                isSelected = selectedPeriod == Period.WEEKS,
-                onClick = { selectedPeriod = Period.WEEKS }
+                isSelected = selectedPeriod == VisitorsPeriod.WEEKS,
+                onClick = { selectedPeriod = VisitorsPeriod.WEEKS }
             )
 
             PeriodButton(
                 text = "По месяцам",
-                isSelected = selectedPeriod == Period.MONTHS,
-                onClick = { selectedPeriod = Period.MONTHS }
+                isSelected = selectedPeriod == VisitorsPeriod.MONTHS,
+                onClick = { selectedPeriod = VisitorsPeriod.MONTHS }
             )
         }
     }
-    DailyChart()
+    when (selectedPeriod) {
+        VisitorsPeriod.DAYS ->   DailyChart()
+        VisitorsPeriod.WEEKS -> Unit
+        VisitorsPeriod.MONTHS -> Unit
+    }
+
 }
