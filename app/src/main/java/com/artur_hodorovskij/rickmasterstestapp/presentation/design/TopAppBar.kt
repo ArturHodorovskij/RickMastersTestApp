@@ -18,7 +18,7 @@ fun TopAppBar(
 ) {
     Row(
         modifier = Modifier
-            .padding(bottom = 12.dp)
+            .padding(bottom = 12.dp, start = 16.dp,end = 16.dp)
             .fillMaxWidth()
             .height(86.dp),
         verticalAlignment = Alignment.Bottom

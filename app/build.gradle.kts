@@ -41,14 +41,21 @@ android {
 
 dependencies {
 
+
+    implementation(libs.ktor.ktor.client.logging)
     implementation (libs.ycharts)
     implementation(libs.ktor.client.android)
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.gson)
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
+    implementation(libs.material3)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation (libs.androidx.lifecycle.viewmodel.compose)
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
