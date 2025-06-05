@@ -3,6 +3,7 @@ package com.artur_hodorovskij.rickmasterstestapp.presentation.visitors
 import android.graphics.Paint
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,6 +24,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.text.drawText
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlin.math.absoluteValue
@@ -36,6 +38,7 @@ fun DailyChart() {
     val padding = 16.dp
     val axisColor = Color (0xFFA7A7B1)
     val lineColor = Color(0xFFFF2E00)
+    val isDarkTheme = isSystemInDarkTheme()
 
     var touchPosition by remember { mutableStateOf<Offset?>(null) }
 
@@ -160,7 +163,7 @@ fun DailyChart() {
                     val popupY = closestOffset.y - popupHeight
 
                     drawRoundRect(
-                        color = Color.White,
+                        color = Color(if (isDarkTheme) Color.Black.toArgb() else Color.White.toArgb()),
                         topLeft = Offset(popupX, popupY),
                         size = Size(popupWidth, popupHeight),
                         cornerRadius = CornerRadius(8.dp.toPx())
@@ -193,13 +196,6 @@ fun DailyChart() {
                         drawText("${point.y.toInt()}", centerX, yPosY, paintY)
                         drawText("${point.x.toInt()}", centerX, yPosX, paintX)
                     }
-
-                    drawCircle(
-                        color = Color.Black,
-                        radius = 8f,
-                        center = closestOffset,
-                        style = Stroke(width = 2f)
-                    )
                 }
             }
         }

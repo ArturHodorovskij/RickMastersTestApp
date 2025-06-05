@@ -43,7 +43,6 @@ dependencies {
 
 
     implementation(libs.ktor.ktor.client.logging)
-    implementation (libs.ycharts)
     implementation(libs.ktor.client.android)
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.content.negotiation)
