@@ -54,13 +54,14 @@ fun DailyChart() {
 
             val canvasWidth = size.width
             val canvasHeight = size.height
+            val verticalMargin = 20.dp.toPx()
 
             val leftPadding = padding.toPx()
             val bottomPadding = padding.toPx()
             val topPadding = padding.toPx()
 
             val graphWidth = canvasWidth - leftPadding
-            val graphHeight = canvasHeight - topPadding - bottomPadding
+            val graphHeight = canvasHeight - topPadding - bottomPadding - 2 * verticalMargin
 
             val dashEffect = PathEffect.dashPathEffect(floatArrayOf(50f, 30f), 0f)
 
@@ -92,7 +93,7 @@ fun DailyChart() {
             val scaledPoints = pointList.mapIndexed { index, point ->
                 val x = leftPadding + index * xStep
                 val yRatio = (point.y - min) / yRange
-                val y = canvasHeight - bottomPadding - yRatio * graphHeight
+                val y = canvasHeight - bottomPadding - verticalMargin - yRatio * graphHeight
                 Pair(Offset(x, y), point)
             }
 
