@@ -41,32 +41,20 @@ fun GenderAndAge() {
             .horizontalScroll(rememberScrollState()),
         horizontalArrangement = Arrangement.SpaceAround,
     ) {
-        PeriodButton(
-            text = "По дням",
-            isSelected = selectedPeriod == GenderAndAgePeriod.TODAY,
-            onClick = { selectedPeriod = GenderAndAgePeriod.TODAY }
-        )
-        PeriodButton(
-            text = "По неделям",
-            isSelected = selectedPeriod == GenderAndAgePeriod.WEEKLY,
-            onClick = { selectedPeriod = GenderAndAgePeriod.WEEKLY }
-        )
-        PeriodButton(
-            text = "По месяцам",
-            isSelected = selectedPeriod == GenderAndAgePeriod.MONTHLY,
-            onClick = { selectedPeriod = GenderAndAgePeriod.MONTHLY }
-        )
-        PeriodButton(
-            text = "По месяцам",
-            isSelected = selectedPeriod == GenderAndAgePeriod.ALL_TIME,
-            onClick = { selectedPeriod = GenderAndAgePeriod.ALL_TIME }
-        )
+        GenderAndAgePeriod.entries.forEach { item ->
+            PeriodButton(
+                text = item.description,
+                isSelected = selectedPeriod == item,
+                onClick = { selectedPeriod = item }
+            )
+        }
     }
     when (selectedPeriod) {
         GenderAndAgePeriod.TODAY -> {
             GenderDonutChart()
             GenderAndAgeBarChart()
         }
+
         GenderAndAgePeriod.WEEKLY -> Unit
         GenderAndAgePeriod.MONTHLY -> Unit
         GenderAndAgePeriod.ALL_TIME -> Unit

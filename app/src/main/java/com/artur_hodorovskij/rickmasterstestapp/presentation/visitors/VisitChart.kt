@@ -34,27 +34,17 @@ fun VisitChart() {
             horizontalArrangement = Arrangement.SpaceAround,
 
             ) {
-            PeriodButton(
-                text = "По дням",
-                isSelected = selectedPeriod == VisitorsPeriod.DAYS,
-                onClick = { selectedPeriod = VisitorsPeriod.DAYS }
-            )
-
-            PeriodButton(
-                text = "По неделям",
-                isSelected = selectedPeriod == VisitorsPeriod.WEEKS,
-                onClick = { selectedPeriod = VisitorsPeriod.WEEKS }
-            )
-
-            PeriodButton(
-                text = "По месяцам",
-                isSelected = selectedPeriod == VisitorsPeriod.MONTHS,
-                onClick = { selectedPeriod = VisitorsPeriod.MONTHS }
-            )
+            VisitorsPeriod.entries.forEach { item ->
+                PeriodButton(
+                    text = item.description,
+                    isSelected = selectedPeriod == item,
+                    onClick = { selectedPeriod = item }
+                )
+            }
         }
     }
     when (selectedPeriod) {
-        VisitorsPeriod.DAYS ->   DailyChart()
+        VisitorsPeriod.DAYS -> DailyChart()
         VisitorsPeriod.WEEKS -> Unit
         VisitorsPeriod.MONTHS -> Unit
     }
