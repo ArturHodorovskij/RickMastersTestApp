@@ -4,9 +4,9 @@ import com.artur_hodorovskij.rickmasterstestapp.data.models.UserDataFiles
 
 data class User(
     val id: Int,
-    val sex: String,
-    val userName: String,
+    val sex: String?,
+    val userName: String?,
     val isOnline: Boolean,
     val age: Int,
-    val files: UserDataFiles
+    val files: UserDataFiles?
 )

@@ -7,18 +7,14 @@ import io.ktor.client.call.body
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
+import io.ktor.serialization.gson.gson
 
 class ApiService {
     private val client = HttpClient(Android) {
         install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true
-            })
+            gson()
         }
     }
-
     suspend fun getUsers(): UserData {
         return client.get("http://test.rikmasters.ru/api/users/").body()
     }

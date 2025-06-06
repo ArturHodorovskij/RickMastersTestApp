@@ -7,5 +7,7 @@ class GetDataFromApiImpl : GetDataFromApi {
 
     override suspend fun getStatisticData(): StatisticData = ApiService().getStatistics()
 
+
     override suspend fun getUserData(): UserData = ApiService().getUsers()
+
 }

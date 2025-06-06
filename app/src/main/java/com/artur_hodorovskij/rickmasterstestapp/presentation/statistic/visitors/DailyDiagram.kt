@@ -1,4 +1,4 @@
-package com.artur_hodorovskij.rickmasterstestapp.presentation.visitors
+package com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.visitors
 
 import android.graphics.Paint
 import androidx.compose.foundation.Canvas

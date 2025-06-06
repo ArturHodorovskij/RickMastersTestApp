@@ -1,4 +1,4 @@
-package com.artur_hodorovskij.rickmasterstestapp.presentation.visitors
+package com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.visitors
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.artur_hodorovskij.rickmasterstestapp.data.models.VisitorsPeriod
-import com.artur_hodorovskij.rickmasterstestapp.presentation.design.PeriodButton
+import com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.design.PeriodButton
 
 @Composable
 fun VisitContent() {

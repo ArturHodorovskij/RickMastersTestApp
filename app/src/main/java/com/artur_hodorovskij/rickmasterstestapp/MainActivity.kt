@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.artur_hodorovskij.rickmasterstestapp.presentation.StatisticScreen
+import com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.StatisticScreen
 import com.artur_hodorovskij.rickmasterstestapp.ui.theme.RickMastersTestAppTheme
 
 class MainActivity : ComponentActivity() {

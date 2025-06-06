@@ -1,4 +1,4 @@
-package com.artur_hodorovskij.rickmasterstestapp.presentation.genderandage
+package com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.genderandage
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement

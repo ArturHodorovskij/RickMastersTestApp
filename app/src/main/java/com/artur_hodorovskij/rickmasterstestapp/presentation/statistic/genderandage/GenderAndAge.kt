@@ -1,4 +1,4 @@
-package com.artur_hodorovskij.rickmasterstestapp.presentation.genderandage
+package com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.genderandage
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -18,7 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.artur_hodorovskij.rickmasterstestapp.data.models.GenderAndAgePeriod
-import com.artur_hodorovskij.rickmasterstestapp.presentation.design.PeriodButton
+import com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.design.PeriodButton
 
 @Composable
 fun GenderAndAge() {

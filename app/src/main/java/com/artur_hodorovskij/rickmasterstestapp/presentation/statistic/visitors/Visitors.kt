@@ -1,4 +1,4 @@
-package com.artur_hodorovskij.rickmasterstestapp.presentation.spectators
+package com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.visitors
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,20 +8,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.artur_hodorovskij.rickmasterstestapp.R
-import com.artur_hodorovskij.rickmasterstestapp.presentation.design.StatisticCard
+import com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.design.StatisticCard
+
 
 @Composable
-fun Spectators() {
+fun Visitors() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(horizontal = 16.dp)
     ) {
         Text(
-            text = "Наблюдатели",
+            text = "Посетители",
             fontSize = 20.sp,
             textAlign = TextAlign.Start,
             lineHeight = 28.sp
@@ -30,13 +32,15 @@ fun Spectators() {
             lineImage = painterResource(R.drawable.growth_line),
             arrowImage = painterResource(R.drawable.arrow_up),
             quantity = "1356",
-            title = "Новые наблюдатели в этом месяце"
+            title = "Количество посетителей в этом месяце выросло"
         )
-        StatisticCard(
-            lineImage = painterResource(R.drawable.falling_line),
-            arrowImage = painterResource(R.drawable.arrow_down),
-            quantity = "10",
-            title = "Пользователей перестали за вами наблюдать"
-        )
+        VisitContent()
     }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun VisitorsPreview() {
+    Visitors()
 }
