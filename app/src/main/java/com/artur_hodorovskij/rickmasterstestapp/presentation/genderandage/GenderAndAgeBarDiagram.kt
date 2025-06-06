@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -29,15 +30,16 @@ import kotlin.math.roundToInt
 import kotlin.random.Random
 
 @Composable
-fun GenderAndAgeBarChart(
+fun GenderAndAgeBarDiagram(
     modifier: Modifier = Modifier,
     labels: List<String> = listOf("18-22", "22-25", "26-30", "31-35", "36-40", "40-50", ">50"),
 ) {
-    val color1 = Color(0xFFFF2E00)
-    val color2 = Color(0xFFF99963)
+    val primaryColor = MaterialTheme.colorScheme.primary
+    val secondaryColor = MaterialTheme.colorScheme.secondary
+    val textColor = MaterialTheme.colorScheme.onPrimary
+
     val rowHeightDp = 40.dp
     val labelWidthDp = 70.dp
-    val isDarkTheme = isSystemInDarkTheme()
 
     val data = remember {
         labels.map { label ->
@@ -81,7 +83,7 @@ fun GenderAndAgeBarChart(
                     val length2 = lineMaxWidth * (entry.percent2 / 100f)
 
                     drawLine(
-                        color = color1,
+                        color = primaryColor,
                         strokeWidth = lineHeight,
                         cap = StrokeCap.Round,
                         start = Offset(0f, lineHeight / 2),
@@ -89,7 +91,7 @@ fun GenderAndAgeBarChart(
                     )
 
                     drawLine(
-                        color = color2,
+                        color = secondaryColor,
                         strokeWidth = lineHeight,
                         cap = StrokeCap.Round,
                         start = Offset(0f, lineHeight * 3),
@@ -98,7 +100,7 @@ fun GenderAndAgeBarChart(
 
                     drawContext.canvas.nativeCanvas.apply {
                         val textPaint = Paint().apply {
-                            color = if (isDarkTheme) Color.White.toArgb() else Color.Black.toArgb()
+                            color = textColor.toArgb()
                             textSize = 12.sp.toPx()
                             isAntiAlias = true
                             typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)

@@ -34,7 +34,7 @@ fun Visitors() {
             quantity = "1356",
             title = "Количество посетителей в этом месяце выросло"
         )
-        VisitChart()
+        VisitContent()
     }
 }
 

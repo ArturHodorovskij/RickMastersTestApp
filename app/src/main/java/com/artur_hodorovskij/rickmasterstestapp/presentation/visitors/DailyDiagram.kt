@@ -3,12 +3,12 @@ package com.artur_hodorovskij.rickmasterstestapp.presentation.visitors
 import android.graphics.Paint
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,18 +26,19 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.artur_hodorovskij.rickmasterstestapp.ui.theme.AxisColor
 import kotlin.math.absoluteValue
 import kotlin.random.Random
 
 @Composable
-fun DailyChart() {
+fun DailyDiagram() {
     val pointList = remember { getPointList() }
     val max = getMax(pointList)
     val min = getMin(pointList)
-    val padding = 16.dp
-    val axisColor = Color (0xFFA7A7B1)
-    val lineColor = Color(0xFFFF2E00)
-    val isDarkTheme = isSystemInDarkTheme()
+    val paddingDiagram = 16.dp
+
+    val lineColor = MaterialTheme.colorScheme.primary
+    val diagramBackground = MaterialTheme.colorScheme.background
 
     var touchPosition by remember { mutableStateOf<Offset?>(null) }
 
@@ -61,9 +62,9 @@ fun DailyChart() {
             val canvasHeight = size.height
             val verticalMargin = 40.dp.toPx()
 
-            val leftPadding = padding.toPx()
-            val bottomPadding = padding.toPx()
-            val topPadding = padding.toPx()
+            val leftPadding = paddingDiagram.toPx()
+            val bottomPadding = paddingDiagram.toPx()
+            val topPadding = paddingDiagram.toPx()
 
             val graphWidth = canvasWidth - leftPadding
             val graphHeight = canvasHeight - topPadding - bottomPadding - 2 * verticalMargin
@@ -71,21 +72,21 @@ fun DailyChart() {
             val dashEffect = PathEffect.dashPathEffect(floatArrayOf(50f, 30f), 0f)
 
             drawLine(
-                color = axisColor,
+                color = AxisColor,
                 start = Offset(leftPadding, canvasHeight - bottomPadding),
                 end = Offset(canvasWidth, canvasHeight - bottomPadding),
                 strokeWidth = 2.dp.toPx(),
                 pathEffect = dashEffect
             )
             drawLine(
-                color = axisColor,
+                color = AxisColor,
                 start = Offset(leftPadding, canvasHeight / 2),
                 end = Offset(canvasWidth, canvasHeight / 2),
                 strokeWidth = 2.dp.toPx(),
                 pathEffect = dashEffect
             )
             drawLine(
-                color = axisColor,
+                color = AxisColor,
                 start = Offset(leftPadding, topPadding),
                 end = Offset(canvasWidth, topPadding),
                 strokeWidth = 2.dp.toPx(),
@@ -118,7 +119,7 @@ fun DailyChart() {
                 )
 
                 drawCircle(
-                    color = Color.White,
+                    color = diagramBackground,
                     radius = 3.dp.toPx(),
                     center = it.first
                 )
@@ -162,7 +163,7 @@ fun DailyChart() {
                     val popupY = closestOffset.y - popupHeight
 
                     drawRoundRect(
-                        color = Color(if (isDarkTheme) Color.Black.toArgb() else Color.White.toArgb()),
+                        color = diagramBackground,
                         topLeft = Offset(popupX, popupY),
                         size = Size(popupWidth, popupHeight),
                         cornerRadius = CornerRadius(8.dp.toPx())

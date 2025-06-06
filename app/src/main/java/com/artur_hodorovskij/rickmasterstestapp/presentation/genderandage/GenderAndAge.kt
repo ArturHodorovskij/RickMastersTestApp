@@ -51,10 +51,9 @@ fun GenderAndAge() {
     }
     when (selectedPeriod) {
         GenderAndAgePeriod.TODAY -> {
-            GenderDonutChart()
-            GenderAndAgeBarChart()
+            GenderDonutDiagram()
+            GenderAndAgeBarDiagram()
         }
-
         GenderAndAgePeriod.WEEKLY -> Unit
         GenderAndAgePeriod.MONTHLY -> Unit
         GenderAndAgePeriod.ALL_TIME -> Unit

@@ -18,7 +18,7 @@ import com.artur_hodorovskij.rickmasterstestapp.data.models.VisitorsPeriod
 import com.artur_hodorovskij.rickmasterstestapp.presentation.design.PeriodButton
 
 @Composable
-fun VisitChart() {
+fun VisitContent() {
     var selectedPeriod by remember { mutableStateOf(VisitorsPeriod.DAYS) }
 
     Column(
@@ -44,7 +44,7 @@ fun VisitChart() {
         }
     }
     when (selectedPeriod) {
-        VisitorsPeriod.DAYS -> DailyChart()
+        VisitorsPeriod.DAYS -> DailyDiagram()
         VisitorsPeriod.WEEKS -> Unit
         VisitorsPeriod.MONTHS -> Unit
     }

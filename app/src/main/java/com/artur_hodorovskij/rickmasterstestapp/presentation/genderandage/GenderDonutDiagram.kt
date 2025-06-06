@@ -12,27 +12,25 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlin.random.Random
 
 @Composable
-fun GenderDonutChart() {
+fun GenderDonutDiagram() {
 
-    val percentage1 = Random.nextInt(0, 100).toFloat()
-    val percentage2 = 100f - percentage1
+    val primaryPercentage = Random.nextInt(0, 100).toFloat()
+    val secondaryPercentage = 100f - primaryPercentage
 
-    val color1 = Color(0xFFFF2E00)
-    val color2 = Color(0xFFF99963)
+    val primaryColor = MaterialTheme.colorScheme.primary
+    val secondaryColor = MaterialTheme.colorScheme.secondary
 
     val strokeWidth = 40f
 
@@ -47,13 +45,13 @@ fun GenderDonutChart() {
             Canvas(modifier = Modifier.fillMaxSize()) {
                 val diameter = size.minDimension
 
-                val sweep1 = 360 * (percentage1 / 100f)
-                val sweep2 = 360 * (percentage2 / 100f)
+                val sweep1 = 360 * (primaryPercentage / 100f)
+                val sweep2 = 360 * (secondaryPercentage / 100f)
 
                 val gapDegrees = 10f
 
                 drawArc(
-                    color = color1,
+                    color = primaryColor,
                     startAngle = -90f,
                     sweepAngle = sweep1 - gapDegrees / 2,
                     useCenter = false,
@@ -63,7 +61,7 @@ fun GenderDonutChart() {
                 )
 
                 drawArc(
-                    color = color2,
+                    color = secondaryColor,
                     startAngle = -90f + sweep1 + gapDegrees / 2,
                     sweepAngle = sweep2 - gapDegrees - gapDegrees / 2,
                     useCenter = false,
@@ -80,9 +78,9 @@ fun GenderDonutChart() {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
-            DonutLegendItem(color1, "Мужчины", percentage1)
+            DonutLegendItem(primaryColor, "Мужчины", primaryPercentage)
             Spacer(modifier = Modifier.width(32.dp))
-            DonutLegendItem(color2, "Женщины", percentage2)
+            DonutLegendItem(secondaryColor, "Женщины", secondaryPercentage)
         }
     }
 }

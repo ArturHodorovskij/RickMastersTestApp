@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.artur_hodorovskij.rickmasterstestapp.presentation.genderandage.GenderAndAge
-import com.artur_hodorovskij.rickmasterstestapp.presentation.observers.Observers
+import com.artur_hodorovskij.rickmasterstestapp.presentation.spectators.Spectators
 import com.artur_hodorovskij.rickmasterstestapp.presentation.topvisitor.TopVisitors
 import com.artur_hodorovskij.rickmasterstestapp.presentation.visitors.Visitors
 
@@ -24,7 +24,7 @@ fun StatisticScreen(modifier:Modifier) {
         Visitors()
         TopVisitors()
         GenderAndAge()
-        Observers()
+        Spectators()
     }
 }
 

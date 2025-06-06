@@ -1,4 +1,4 @@
-package com.artur_hodorovskij.rickmasterstestapp.presentation.observers
+package com.artur_hodorovskij.rickmasterstestapp.presentation.spectators
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,7 +14,7 @@ import com.artur_hodorovskij.rickmasterstestapp.R
 import com.artur_hodorovskij.rickmasterstestapp.presentation.design.StatisticCard
 
 @Composable
-fun Observers() {
+fun Spectators() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
