@@ -3,11 +3,14 @@ package com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.visitors
 import android.graphics.Paint
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,31 +29,71 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.artur_hodorovskij.rickmasterstestapp.domain.models.Statistic
 import com.artur_hodorovskij.rickmasterstestapp.ui.theme.AxisColor
+import java.time.LocalDate
+import java.time.format.TextStyle
+import java.util.Locale
 import kotlin.math.absoluteValue
-import kotlin.random.Random
+
+fun parseDate(dateInt: Int): LocalDate {
+    val dateStr = dateInt.toString().padStart(8, '0')
+    val day = dateStr.substring(0, 2).toInt()
+    val month = dateStr.substring(2, 4).toInt()
+    val year = dateStr.substring(4, 8).toInt()
+    return LocalDate.of(year, month, day)
+}
+
+fun preparePoints(statistics: List<Statistic>): List<PointDateCount> {
+    val viewsCount = mutableMapOf<LocalDate, Int>()
+    
+    for (stat in statistics) {
+        if (stat.type == "view") {
+            for (dateInt in stat.dates) {
+                val date = parseDate(dateInt)
+                viewsCount[date] = viewsCount.getOrDefault(date, 0) + 1
+            }
+        }
+    }
+
+    val sorted = viewsCount.toSortedMap()
+    val sortedList = sorted.toList()
+
+    return sortedList.mapIndexed { index, entry ->
+        PointDateCount(
+            index.toFloat(),
+            entry.second.toFloat(),
+            entry.first
+        )
+    }
+}
+
+data class PointDateCount(val x: Float, val y: Float, val date: LocalDate)
 
 @Composable
-fun DailyDiagram() {
-    val pointList = remember { getPointList() }
-    val max = getMax(pointList)
-    val min = getMin(pointList)
-    val paddingDiagram = 16.dp
+fun DailyDiagram(statistic: List<Statistic>) {
 
+    val pointList = remember(statistic) { preparePoints(statistic) }
+    val max = (pointList.maxOfOrNull { it.y } ?: 0f)
+    val min = (pointList.minOfOrNull { it.y } ?: 0f)
+    val paddingDiagram = 16.dp
     val lineColor = MaterialTheme.colorScheme.primary
     val diagramBackground = MaterialTheme.colorScheme.background
-
     var touchPosition by remember { mutableStateOf<Offset?>(null) }
+    val pointWidth = 80.dp
+    val canvasWidth = 40.dp + pointWidth * pointList.size
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(210.dp)
             .padding(end = 16.dp, top = 16.dp, bottom = 16.dp)
+            .horizontalScroll(rememberScrollState(), reverseScrolling = false)
     ) {
         Canvas(
             modifier = Modifier
-                .fillMaxSize()
+                .width(canvasWidth)
+                .fillMaxHeight()
                 .pointerInput(Unit) {
                     detectTapGestures { offset ->
                         touchPosition = offset
@@ -58,15 +101,13 @@ fun DailyDiagram() {
                 }
         ) {
 
-            val canvasWidth = size.width
             val canvasHeight = size.height
             val verticalMargin = 40.dp.toPx()
 
-            val leftPadding = paddingDiagram.toPx()
+            val leftPadding = paddingDiagram.toPx() + 5.dp.toPx()
             val bottomPadding = paddingDiagram.toPx()
             val topPadding = paddingDiagram.toPx()
 
-            val graphWidth = canvasWidth - leftPadding
             val graphHeight = canvasHeight - topPadding - bottomPadding - 2 * verticalMargin
 
             val dashEffect = PathEffect.dashPathEffect(floatArrayOf(50f, 30f), 0f)
@@ -74,30 +115,34 @@ fun DailyDiagram() {
             drawLine(
                 color = AxisColor,
                 start = Offset(leftPadding, canvasHeight - bottomPadding),
-                end = Offset(canvasWidth, canvasHeight - bottomPadding),
+                end = Offset(size.width, canvasHeight - bottomPadding),
                 strokeWidth = 2.dp.toPx(),
                 pathEffect = dashEffect
             )
+
             drawLine(
                 color = AxisColor,
                 start = Offset(leftPadding, canvasHeight / 2),
-                end = Offset(canvasWidth, canvasHeight / 2),
+                end = Offset(size.width, canvasHeight / 2),
                 strokeWidth = 2.dp.toPx(),
                 pathEffect = dashEffect
             )
+
             drawLine(
                 color = AxisColor,
                 start = Offset(leftPadding, topPadding),
-                end = Offset(canvasWidth, topPadding),
+                end = Offset(size.width, topPadding),
                 strokeWidth = 2.dp.toPx(),
                 pathEffect = dashEffect
             )
 
-            val xStep = graphWidth / (pointList.size - 1)
-            val yRange = max - min
+            if (pointList.size < 2) return@Canvas
+
+            val xStep = pointWidth.toPx()
+            val yRange = (max - min).takeIf { it != 0f } ?: 1f
 
             val scaledPoints = pointList.mapIndexed { index, point ->
-                val x = leftPadding + index * xStep
+                val x = 40.dp.toPx() + leftPadding + index * xStep
                 val yRatio = (point.y - min) / yRange
                 val y = canvasHeight - bottomPadding - verticalMargin - yRatio * graphHeight
                 Pair(Offset(x, y), point)
@@ -111,6 +156,7 @@ fun DailyDiagram() {
                     strokeWidth = 4.dp.toPx()
                 )
             }
+
             scaledPoints.forEach {
                 drawCircle(
                     color = lineColor,
@@ -125,9 +171,11 @@ fun DailyDiagram() {
                 )
             }
 
-            scaledPoints.forEachIndexed { index, (offset, _) ->
+            scaledPoints.forEachIndexed { _, (offset, point) ->
+                val dayStr = String.format("%02d", point.date.dayOfMonth)
+                val monthStr = String.format("%02d", point.date.monthValue)
                 drawContext.canvas.nativeCanvas.drawText(
-                    index.toString(),
+                    "$dayStr.$monthStr",
                     offset.x,
                     canvasHeight + 3.sp.toPx(),
                     Paint().apply {
@@ -158,7 +206,7 @@ fun DailyDiagram() {
                     val popupHeight = 72.dp.toPx()
                     val popupX = (closestOffset.x - popupWidth / 2f).coerceIn(
                         10f,
-                        canvasWidth - popupWidth - 10f
+                        size.width - popupWidth - 10f
                     )
                     val popupY = closestOffset.y - popupHeight
 
@@ -168,12 +216,13 @@ fun DailyDiagram() {
                         size = Size(popupWidth, popupHeight),
                         cornerRadius = CornerRadius(8.dp.toPx())
                     )
+
                     drawRoundRect(
-                        color = lineColor,
+                        color = AxisColor,
                         topLeft = Offset(popupX, popupY),
                         size = Size(popupWidth, popupHeight),
                         cornerRadius = CornerRadius(8.dp.toPx()),
-                        style = Stroke(width = 2f)
+                        style = Stroke(width = 1f)
                     )
 
                     drawContext.canvas.nativeCanvas.apply {
@@ -186,15 +235,19 @@ fun DailyDiagram() {
                         val paintX = Paint().apply {
                             color = Color.Gray.toArgb()
                             textSize = 15.sp.toPx()
-                            textAlign =Paint.Align.CENTER
+                            textAlign = Paint.Align.CENTER
                             isAntiAlias = true
                         }
+
                         val centerX = popupX + popupWidth / 2f
                         val yPosY = popupY + popupHeight / 3f + 15.sp.toPx() / 2f
                         val yPosX = popupY + 2 * popupHeight / 3f + 15.sp.toPx() / 2f
 
-                        drawText("${point.y.toInt()}", centerX, yPosY, paintY)
-                        drawText("${point.x.toInt()}", centerX, yPosX, paintX)
+                        drawText("${point.y.toInt()} посетитель", centerX, yPosY, paintY)
+
+                        val monthName =
+                            point.date.month.getDisplayName(TextStyle.FULL, Locale("ru"))
+                        drawText("${point.date.dayOfMonth} $monthName", centerX, yPosX, paintX)
                     }
                 }
             }
@@ -202,29 +255,3 @@ fun DailyDiagram() {
     }
 }
 
-fun getPointList(): List<Point> {
-    val list = ArrayList<Point>()
-    for (i in 0..7) list.add(
-        Point(
-            i.toFloat(),
-            Random.nextInt(0, 100).toFloat()
-        )
-    )
-    return list
-}
-
-fun getMax(list: List<Point>): Float {
-    if (list.isEmpty()) return 0f
-    var max = list.first().y
-    list.forEach { point -> if (max < point.y) max = point.y }
-    return max
-}
-
-fun getMin(list: List<Point>): Float {
-    if (list.isEmpty()) return 0f
-    var min = list.first().y
-    list.forEach { point -> if (min > point.y) min = point.y }
-    return min
-}
-
-data class Point(val x: Float, val y: Float)

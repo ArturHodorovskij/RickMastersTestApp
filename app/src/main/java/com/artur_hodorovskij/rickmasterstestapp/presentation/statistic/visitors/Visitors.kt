@@ -8,15 +8,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.artur_hodorovskij.rickmasterstestapp.R
+import com.artur_hodorovskij.rickmasterstestapp.domain.models.StatisticList
 import com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.design.StatisticCard
 
 
 @Composable
-fun Visitors() {
+fun Visitors(statisticList:StatisticList) {
+    val statistic = statisticList.statistics
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -28,19 +29,14 @@ fun Visitors() {
             textAlign = TextAlign.Start,
             lineHeight = 28.sp
         )
+
         StatisticCard(
             lineImage = painterResource(R.drawable.growth_line),
             arrowImage = painterResource(R.drawable.arrow_up),
             quantity = "1356",
             title = "Количество посетителей в этом месяце выросло"
         )
-        VisitContent()
+
+        VisitContent(statistic = statistic)
     }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun VisitorsPreview() {
-    Visitors()
 }

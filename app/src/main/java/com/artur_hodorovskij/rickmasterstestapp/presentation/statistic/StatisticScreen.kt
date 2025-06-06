@@ -32,7 +32,9 @@ fun StatisticScreen(modifier: Modifier, viewModel: StatisticViewModel = viewMode
             is StatisticScreenState.Initial -> Unit
             is StatisticScreenState.Loading -> DownloadIndicator()
             is StatisticScreenState.Content -> {
-                Visitors()
+                Visitors(
+                    statisticList = (state as StatisticScreenState.Content).statistic
+                )
                 TopVisitors()
                 GenderAndAge()
                 Spectators()

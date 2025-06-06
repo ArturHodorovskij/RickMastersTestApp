@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 data class StatisticData(
     @SerialName("user_id") val userId: Int,
     @SerialName("type") val type: String,
-    @SerialName("dates") val dates: List<String>
+    @SerialName("dates") val dates: List<Int>
 )

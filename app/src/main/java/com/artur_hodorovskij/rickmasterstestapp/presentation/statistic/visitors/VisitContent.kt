@@ -15,10 +15,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.artur_hodorovskij.rickmasterstestapp.data.models.VisitorsPeriod
+import com.artur_hodorovskij.rickmasterstestapp.domain.models.Statistic
 import com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.design.PeriodButton
 
 @Composable
-fun VisitContent() {
+fun VisitContent(statistic: List<Statistic>) {
+
     var selectedPeriod by remember { mutableStateOf(VisitorsPeriod.DAYS) }
 
     Column(
@@ -43,10 +45,10 @@ fun VisitContent() {
             }
         }
     }
+
     when (selectedPeriod) {
-        VisitorsPeriod.DAYS -> DailyDiagram()
+        VisitorsPeriod.DAYS -> DailyDiagram(statistic = statistic)
         VisitorsPeriod.WEEKS -> Unit
         VisitorsPeriod.MONTHS -> Unit
     }
-
 }

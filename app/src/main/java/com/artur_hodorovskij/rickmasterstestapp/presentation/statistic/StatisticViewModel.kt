@@ -28,7 +28,7 @@ class StatisticViewModel : ViewModel() {
     }
 
     private fun loadData() {
-        _state.value = StatisticScreenState.Initial
+        _state.value = StatisticScreenState.Loading
         viewModelScope.launch {
             try {
                 val getStatisticData = getStatisticDataUseCase.execute()
