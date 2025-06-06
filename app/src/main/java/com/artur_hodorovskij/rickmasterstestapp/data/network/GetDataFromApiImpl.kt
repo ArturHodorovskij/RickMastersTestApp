@@ -1,13 +1,12 @@
 package com.artur_hodorovskij.rickmasterstestapp.data.network
 
-import com.artur_hodorovskij.rickmasterstestapp.data.models.StatisticData
-import com.artur_hodorovskij.rickmasterstestapp.data.models.UserData
+import com.artur_hodorovskij.rickmasterstestapp.data.models.StatisticResponse
+import com.artur_hodorovskij.rickmasterstestapp.data.models.UserResponse
 
 class GetDataFromApiImpl : GetDataFromApi {
 
-    override suspend fun getStatisticData(): StatisticData = ApiService().getStatistics()
+    override suspend fun getStatisticData(): StatisticResponse = getStatistics()
 
-
-    override suspend fun getUserData(): UserData = ApiService().getUsers()
+    override suspend fun getUserData(): UserResponse = getUsers()
 
 }

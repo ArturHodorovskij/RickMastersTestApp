@@ -1,10 +1,10 @@
 package com.artur_hodorovskij.rickmasterstestapp.data.network
 
-import com.artur_hodorovskij.rickmasterstestapp.data.models.StatisticData
-import com.artur_hodorovskij.rickmasterstestapp.data.models.UserData
+import com.artur_hodorovskij.rickmasterstestapp.data.models.StatisticResponse
+import com.artur_hodorovskij.rickmasterstestapp.data.models.UserResponse
 
 interface GetDataFromApi {
-    suspend fun getUserData(): UserData
-    suspend fun getStatisticData(): StatisticData
+    suspend fun getUserData(): UserResponse
+    suspend fun getStatisticData(): StatisticResponse
 }
 

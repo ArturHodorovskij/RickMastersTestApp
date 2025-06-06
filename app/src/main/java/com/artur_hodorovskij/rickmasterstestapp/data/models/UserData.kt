@@ -1,14 +1,14 @@
 package com.artur_hodorovskij.rickmasterstestapp.data.models
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class UserData(
-    @SerializedName("id") val id: Int,
-    @SerializedName("sex") val sex: String,
-    @SerializedName("username") val userName: String,
-    @SerializedName("isOnline") val isOnline: Boolean,
-    @SerializedName("age") val age: Int,
-    @SerializedName("files") val files: UserDataFiles
+    val id: Int,
+    val sex: String,
+    val username: String,
+    val isOnline: Boolean,
+    val age: Int,
+    val files: List<UserDataFiles>
 )

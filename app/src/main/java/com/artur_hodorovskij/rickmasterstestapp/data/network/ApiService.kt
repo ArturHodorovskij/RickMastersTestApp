@@ -1,25 +1,34 @@
 package com.artur_hodorovskij.rickmasterstestapp.data.network
 
-import com.artur_hodorovskij.rickmasterstestapp.data.models.StatisticData
-import com.artur_hodorovskij.rickmasterstestapp.data.models.UserData
+import com.artur_hodorovskij.rickmasterstestapp.data.models.StatisticResponse
+import com.artur_hodorovskij.rickmasterstestapp.data.models.UserResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.engine.android.Android
+import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
-import io.ktor.serialization.gson.gson
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 
-class ApiService {
-    private val client = HttpClient(Android) {
-        install(ContentNegotiation) {
-            gson()
-        }
-    }
-    suspend fun getUsers(): UserData {
-        return client.get("http://test.rikmasters.ru/api/users/").body()
-    }
+const val BASE_URL = "http://test.rikmasters.ru/api/"
 
-    suspend fun getStatistics(): StatisticData {
-        return client.get("http://test.rikmasters.ru/api/statistics/").body()
+
+val client = HttpClient(OkHttp) {
+    install(ContentNegotiation) {
+        json(Json {
+            ignoreUnknownKeys = true
+            prettyPrint = true
+            isLenient = true
+        })
     }
 }
+
+suspend fun getStatistics(): StatisticResponse {
+    return client.get("${BASE_URL}statistics/").body()
+}
+
+suspend fun getUsers(): UserResponse {
+    return client.get("${BASE_URL}users/").body()
+}
+
+

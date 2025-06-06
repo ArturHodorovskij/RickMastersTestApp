@@ -14,10 +14,11 @@ class StatisticViewModel : ViewModel() {
     private var getDataFromApi = GetDataFromApiImpl()
     private var dataRepository =
         DataRepositoryImpl(getDataFromApi = getDataFromApi)
-    private var getUserDataUseCase =
-        GetUserDataUseCase(dataRepository = dataRepository)
     private var getStatisticDataUseCase =
         GetStatisticDataUseCase(dataRepository = dataRepository)
+    private var getUserDataUseCase =
+        GetUserDataUseCase(dataRepository = dataRepository)
+
 
     private val _state = MutableStateFlow<StatisticScreenState>(StatisticScreenState.Initial)
     val state: StateFlow<StatisticScreenState> = _state
@@ -25,13 +26,14 @@ class StatisticViewModel : ViewModel() {
     init {
         loadData()
     }
+
     private fun loadData() {
         _state.value = StatisticScreenState.Initial
         viewModelScope.launch {
             try {
-                val getUserData = getUserDataUseCase.execute()
                 val getStatisticData = getStatisticDataUseCase.execute()
-                _state.value = StatisticScreenState.Content(getUserData, getStatisticData)
+                val getUserData = getUserDataUseCase.execute()
+                _state.value = StatisticScreenState.Content(getStatisticData, getUserData)
             } catch (e: Exception) {
                 handleError(e.message.toString())
             }
@@ -42,7 +44,7 @@ class StatisticViewModel : ViewModel() {
         _state.value = StatisticScreenState.Error(errorMessage = errorMessage)
     }
 
-    fun reloadData(){
+    fun reloadData() {
         loadData()
     }
 }
