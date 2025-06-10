@@ -4,11 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.artur_hodorovskij.rickmasterstestapp.data.network.GetDataFromApiImpl
 import com.artur_hodorovskij.rickmasterstestapp.data.repository.DataRepositoryImpl
+import com.artur_hodorovskij.rickmasterstestapp.domain.models.Statistic
 import com.artur_hodorovskij.rickmasterstestapp.domain.usecase.GetStatisticDataUseCase
 import com.artur_hodorovskij.rickmasterstestapp.domain.usecase.GetUserDataUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 class StatisticViewModel : ViewModel() {
     private var getDataFromApi = GetDataFromApiImpl()
@@ -47,5 +49,39 @@ class StatisticViewModel : ViewModel() {
     fun reloadData() {
         loadData()
     }
+
+    fun parseDate(dateInt: Int): LocalDate {
+        val dateStr = dateInt.toString().padStart(8, '0')
+        val day = dateStr.substring(0, 2).toInt()
+        val month = dateStr.substring(2, 4).toInt()
+        val year = dateStr.substring(4, 8).toInt()
+        return LocalDate.of(year, month, day)
+    }
+
+    fun preparePoints(statistics: List<Statistic>): List<PointDateCount> {
+        val viewsCount = mutableMapOf<LocalDate, Int>()
+
+        for (stat in statistics) {
+            if (stat.type == "view") {
+                for (dateInt in stat.dates) {
+                    val date = parseDate(dateInt)
+                    viewsCount[date] = viewsCount.getOrDefault(date, 0) + 1
+                }
+            }
+        }
+
+        val sorted = viewsCount.toSortedMap()
+        val sortedList = sorted.toList()
+
+        return sortedList.mapIndexed { index, entry ->
+            PointDateCount(
+                index.toFloat(),
+                entry.second.toFloat(),
+                entry.first
+            )
+        }
+    }
+
+    data class PointDateCount(val x: Float, val y: Float, val date: LocalDate)
 }
 

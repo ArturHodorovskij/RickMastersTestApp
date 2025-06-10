@@ -29,51 +29,20 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.artur_hodorovskij.rickmasterstestapp.domain.models.Statistic
+import com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.StatisticScreenState
+import com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.StatisticViewModel
 import com.artur_hodorovskij.rickmasterstestapp.ui.theme.AxisColor
-import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.Locale
 import kotlin.math.absoluteValue
 
-fun parseDate(dateInt: Int): LocalDate {
-    val dateStr = dateInt.toString().padStart(8, '0')
-    val day = dateStr.substring(0, 2).toInt()
-    val month = dateStr.substring(2, 4).toInt()
-    val year = dateStr.substring(4, 8).toInt()
-    return LocalDate.of(year, month, day)
-}
-
-fun preparePoints(statistics: List<Statistic>): List<PointDateCount> {
-    val viewsCount = mutableMapOf<LocalDate, Int>()
-    
-    for (stat in statistics) {
-        if (stat.type == "view") {
-            for (dateInt in stat.dates) {
-                val date = parseDate(dateInt)
-                viewsCount[date] = viewsCount.getOrDefault(date, 0) + 1
-            }
-        }
-    }
-
-    val sorted = viewsCount.toSortedMap()
-    val sortedList = sorted.toList()
-
-    return sortedList.mapIndexed { index, entry ->
-        PointDateCount(
-            index.toFloat(),
-            entry.second.toFloat(),
-            entry.first
-        )
-    }
-}
-
-data class PointDateCount(val x: Float, val y: Float, val date: LocalDate)
 
 @Composable
-fun DailyDiagram(statistic: List<Statistic>) {
+fun DailyDiagram(statistic: StatisticScreenState.Content,viewModel: StatisticViewModel) {
 
-    val pointList = remember(statistic) { preparePoints(statistic) }
+    val statisticList = statistic.statistic.statistics
+    val points = viewModel.preparePoints(statisticList)
+    val pointList = remember(statisticList) { points }
     val max = (pointList.maxOfOrNull { it.y } ?: 0f)
     val min = (pointList.minOfOrNull { it.y } ?: 0f)
     val paddingDiagram = 16.dp

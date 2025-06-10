@@ -9,8 +9,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.design.DownloadIndicator
 import com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.genderandage.GenderAndAge
 import com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.spectators.Spectators
@@ -33,7 +33,7 @@ fun StatisticScreen(modifier: Modifier, viewModel: StatisticViewModel = viewMode
             is StatisticScreenState.Loading -> DownloadIndicator()
             is StatisticScreenState.Content -> {
                 Visitors(
-                    statisticList = (state as StatisticScreenState.Content).statistic
+                    statistic = (state as StatisticScreenState.Content), viewModel=viewModel
                 )
                 TopVisitors()
                 GenderAndAge()

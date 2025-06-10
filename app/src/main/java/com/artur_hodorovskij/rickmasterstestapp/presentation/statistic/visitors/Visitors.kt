@@ -11,13 +11,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.artur_hodorovskij.rickmasterstestapp.R
-import com.artur_hodorovskij.rickmasterstestapp.domain.models.StatisticList
+import com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.StatisticScreenState
+import com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.StatisticViewModel
 import com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.design.StatisticCard
 
 
 @Composable
-fun Visitors(statisticList:StatisticList) {
-    val statistic = statisticList.statistics
+fun Visitors(statistic: StatisticScreenState.Content, viewModel: StatisticViewModel) {
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -37,6 +38,6 @@ fun Visitors(statisticList:StatisticList) {
             title = "Количество посетителей в этом месяце выросло"
         )
 
-        VisitContent(statistic = statistic)
+        VisitContent(statistic = statistic,viewModel = viewModel)
     }
 }
