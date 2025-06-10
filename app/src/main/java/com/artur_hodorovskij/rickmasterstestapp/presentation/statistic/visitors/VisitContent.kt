@@ -20,7 +20,7 @@ import com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.Statistic
 import com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.design.PeriodButton
 
 @Composable
-fun VisitContent(statistic: StatisticScreenState.Content, viewModel: StatisticViewModel) {
+fun VisitContent(content: StatisticScreenState.Content, viewModel: StatisticViewModel) {
 
     var selectedPeriod by remember { mutableStateOf(VisitorsPeriod.DAYS) }
 
@@ -48,7 +48,7 @@ fun VisitContent(statistic: StatisticScreenState.Content, viewModel: StatisticVi
     }
 
     when (selectedPeriod) {
-        VisitorsPeriod.DAYS -> DailyDiagram(statistic = statistic,viewModel=viewModel)
+        VisitorsPeriod.DAYS -> DailyDiagram(content = content,viewModel=viewModel)
         VisitorsPeriod.WEEKS -> Unit
         VisitorsPeriod.MONTHS -> Unit
     }

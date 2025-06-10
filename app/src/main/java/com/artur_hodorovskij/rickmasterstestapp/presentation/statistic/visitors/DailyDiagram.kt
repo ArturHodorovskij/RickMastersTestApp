@@ -38,9 +38,9 @@ import kotlin.math.absoluteValue
 
 
 @Composable
-fun DailyDiagram(statistic: StatisticScreenState.Content,viewModel: StatisticViewModel) {
+fun DailyDiagram(content: StatisticScreenState.Content, viewModel: StatisticViewModel) {
 
-    val statisticList = statistic.statistic.statistics
+    val statisticList = content.statisticList.statistics
     val points = viewModel.preparePoints(statisticList)
     val pointList = remember(statisticList) { points }
     val max = (pointList.maxOfOrNull { it.y } ?: 0f)

@@ -17,7 +17,7 @@ import com.artur_hodorovskij.rickmasterstestapp.presentation.statistic.design.St
 
 
 @Composable
-fun Visitors(statistic: StatisticScreenState.Content, viewModel: StatisticViewModel) {
+fun Visitors(content: StatisticScreenState.Content, viewModel: StatisticViewModel) {
 
     Column(
         modifier = Modifier
@@ -38,6 +38,6 @@ fun Visitors(statistic: StatisticScreenState.Content, viewModel: StatisticViewMo
             title = "Количество посетителей в этом месяце выросло"
         )
 
-        VisitContent(statistic = statistic,viewModel = viewModel)
+        VisitContent(content = content,viewModel = viewModel)
     }
 }

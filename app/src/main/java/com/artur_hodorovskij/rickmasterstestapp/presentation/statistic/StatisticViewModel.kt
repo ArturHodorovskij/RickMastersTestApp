@@ -61,9 +61,9 @@ class StatisticViewModel : ViewModel() {
     fun preparePoints(statistics: List<Statistic>): List<PointDateCount> {
         val viewsCount = mutableMapOf<LocalDate, Int>()
 
-        for (stat in statistics) {
-            if (stat.type == "view") {
-                for (dateInt in stat.dates) {
+        for (visitType in statistics) {
+            if (visitType.type == "view") {
+                for (dateInt in visitType.dates) {
                     val date = parseDate(dateInt)
                     viewsCount[date] = viewsCount.getOrDefault(date, 0) + 1
                 }
