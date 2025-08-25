@@ -1,2 +1,3 @@
 Создание страницы просмотра статистики посетителей с отображением различных графиков c получением данных пользователей с API.
-Andoid/Kotlin/Jetpack Compose/MVVM/MVI/Ktor
+Android/Kotlin/Jetpack Compose/MVVM/MVI/Ktor
+
